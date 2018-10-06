@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CreativeCar</string>
+    <string name="tab_text_1">Drive</string>
+    <string name="tab_text_2">AI</string>
+    <string name="tab_text_3">Camera</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+</resources>
