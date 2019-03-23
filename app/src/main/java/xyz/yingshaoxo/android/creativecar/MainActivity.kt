@@ -24,6 +24,14 @@ import org.json.JSONObject
 val HOST_address = "http://192.168.43.7"
 
 
+fun POST_Control(json: JSONObject) {
+    val text = json.toString()
+    val request = (HOST_address + ":9999/car").httpPost().body(text).timeout(500)
+    request.headers["Content-Type"] = "application/json"
+    request.response { request, response, result ->
+    }
+}
+
 fun POST(json: JSONObject, content: Context) {
     val text = json.toString()
     val request = (HOST_address + ":9958/car").httpPost().body(text).timeout(500)
@@ -44,7 +52,7 @@ fun POST(json: JSONObject, content: Context) {
 
 fun POST(json: JSONObject) {
     val text = json.toString()
-    val request = "http://192.168.43.7:9958/car".httpPost().body(text).timeout(500)
+    val request = (HOST_address + ":9958/car").httpPost().body(text).timeout(500)
     request.headers["Content-Type"] = "application/json"
     request.response { request, response, result ->
     }
@@ -79,8 +87,18 @@ class MainActivity : AppCompatActivity() {
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            fun post(action: String) {
+                val json = JSONObject()
+                json.put("action", action)
+
+                POST_Control(json)
+            }
+
+            post("start/stop")
+
+            Snackbar.make(view, "控制命令已发送", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+
         }
 
     }
